@@ -412,20 +412,6 @@ if [[ $ping_result == "Connected" ]]; then
 	# Link `wp` to the `/usr/local/bin` directory
 	ln -sf /srv/www/wp-cli/bin/wp /usr/local/bin/wp
 
-	# Download and extract phpMemcachedAdmin to provide a dashboard view and
-	# admin interface to the goings on of memcached when running
-	if [[ ! -d /srv/www/default/memcached-admin ]]; then
-		echo -e "\nDownloading phpMemcachedAdmin, see https://code.google.com/p/phpmemcacheadmin/"
-		cd /srv/www/default
-		wget -q -O phpmemcachedadmin.tar.gz 'https://phpmemcacheadmin.googlecode.com/files/phpMemcachedAdmin-1.2.2-r262.tar.gz'
-		mkdir memcached-admin
-		tar -xf phpmemcachedadmin.tar.gz --directory memcached-admin
-		rm phpmemcachedadmin.tar.gz
-	else
-		echo "phpMemcachedAdmin already installed."
-	fi
-
-
 	# Install and configure the latest stable version of WordPress
 	if [[ ! -d /srv/www/wordpress-default ]]; then
 		echo "Downloading WordPress Stable, see http://wordpress.org/"

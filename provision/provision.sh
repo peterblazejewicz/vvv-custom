@@ -437,16 +437,6 @@ if [[ $ping_result == "Connected" ]]; then
 		git pull --rebase origin master
 	fi
 
-	# Webgrind install (for viewing callgrind/cachegrind files produced by
-	# xdebug profiler)
-	if [[ ! -d /srv/www/default/webgrind ]]; then
-		echo -e "\nDownloading webgrind, see https://github.com/jokkedk/webgrind"
-		git clone https://github.com/jokkedk/webgrind.git /srv/www/default/webgrind
-	else
-		echo -e "\nUpdating webgrind..."
-		cd /srv/www/default/webgrind
-		git pull --rebase origin master
-	fi
 
 	# Install and configure the latest stable version of WordPress
 	if [[ ! -d /srv/www/wordpress-default ]]; then

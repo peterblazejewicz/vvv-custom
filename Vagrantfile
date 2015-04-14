@@ -16,13 +16,6 @@ Vagrant.configure("2") do |config|
     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
 
-  # Configuration options for the Parallels provider.
-  config.vm.provider :parallels do |v|
-    v.update_guest_tools = true
-    v.optimize_power_consumption = false
-    v.memory = 1024
-  end
-
   # SSH Agent Forwarding
   #
   # Enable agent forwarding on vagrant ssh commands. This allows you to use ssh keys
@@ -35,11 +28,6 @@ Vagrant.configure("2") do |config|
   # box containing the Ubuntu 14.04 Trusty 64 bit release. Once this box is downloaded
   # to your host computer, it is cached for future use under the specified box name.
   config.vm.box = "ubuntu/trusty64"
-
-  # The Parallels Provider uses a different naming scheme.
-  config.vm.provider :parallels do |v, override|
-    override.vm.box = "parallels/ubuntu-14.04"
-  end
 
   config.vm.hostname = "vvv"
 
@@ -142,12 +130,6 @@ Vagrant.configure("2") do |config|
       config.vm.synced_folder "database/data/", "/var/lib/mysql", :extra => 'dmode=777,fmode=777'
     end
 
-    # The Parallels Provider does not understand "dmode"/"fmode" in the "mount_options" as
-    # those are specific to Virtualbox. The folder is therefore overridden with one that
-    # uses corresponding Parallels mount options.
-    config.vm.provider :parallels do |v, override|
-      override.vm.synced_folder "database/data/", "/var/lib/mysql", :mount_options => []
-    end
   end
 
   # /srv/config/
@@ -173,13 +155,6 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "www/", "/srv/www/", :owner => "www-data", :mount_options => [ "dmode=775", "fmode=774" ]
   else
     config.vm.synced_folder "www/", "/srv/www/", :owner => "www-data", :extra => 'dmode=775,fmode=774'
-  end
-
-  # The Parallels Provider does not understand "dmode"/"fmode" in the "mount_options" as
-  # those are specific to Virtualbox. The folder is therefore overridden with one that
-  # uses corresponding Parallels mount options.
-  config.vm.provider :parallels do |v, override|
-    override.vm.synced_folder "www/", "/srv/www/", :owner => "www-data", :mount_options => []
   end
 
   # Customfile - POSSIBLY UNSTABLE
